@@ -40,8 +40,8 @@ const authController = {
         message: 'Resgister successfully',
         data: newUser
       })
-    } catch (e) {
-      res.status(500).json({ message: e.message })
+    } catch (err) {
+      res.status(500).json({ message: err.message })
     }
   },
 
@@ -73,10 +73,8 @@ const authController = {
           data: { ...others, accessToken }
         })
       }
-    } catch (e) {
-      res.status(500).json({
-        message: e.message
-      })
+    } catch (err) {
+      res.status(500).json({ message: err.message })
     }
   },
 
@@ -102,7 +100,7 @@ const authController = {
         path: '/',
         sameSite: 'strict'
       })
-      return res.status(200).json({ accessToken: newAccessToken })
+      res.status(200).json({ accessToken: newAccessToken })
     })
   },
 

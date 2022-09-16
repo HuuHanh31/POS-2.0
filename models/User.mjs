@@ -9,12 +9,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    address: {
-        type: String
-    },
-    password: {
-        type: String
-    },
+    address: String,
+    password: String,
     permission: {
         type: String,
         default: 'customer'

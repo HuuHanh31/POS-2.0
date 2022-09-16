@@ -8,22 +8,23 @@ const categoryController = {
             message: 'Get all categories successfully',
             data: categories
          })
-      } catch (e) {
-         res.status(500).json({ message: e.message })
+      } catch (err) {
+         res.status(500).json({ message: err.message })
       }
    },
 
    getCategory: async (req, res) => {
       try {
-         const category = await Category.findById({ _id: req.params.id })
+         const category = await Category.findById(req.params.id)
          if (!category)
             return res.status(404).json('Category is not exist')
+
          res.status(200).json({
             message: `Get categrory: ${category.type} successfully`,
             data: category
          })
-      } catch (e) {
-         res.status(500).json({ message: e.message })
+      } catch (err) {
+         res.status(500).json({ message: err.message })
       }
    },
 
@@ -38,19 +39,19 @@ const categoryController = {
             products: req.body.products
          })
 
-         const category = await newCategory.save()
+         await newCategory.save()
          res.status(200).json({
-            message: `Add category: ${category.type} successfully`,
-            data: category
+            message: `Add category: ${newCategory.type} successfully`,
+            data: newCategory
          })
-      } catch (e) {
-         res.status(500).json({ message: e.message })
+      } catch (err) {
+         res.status(500).json({ message: err.message })
       }
    },
 
    putCategory: async (req, res) => {
       try {
-         const category = await Category.findById({ _id: req.params.id })
+         const category = await Category.findById(req.params.id)
          if (!category)
             return res.status(404).json('Category is not exist')
 
@@ -63,8 +64,8 @@ const categoryController = {
             message: `Put category: ${category.type} successfully`,
             data: category
          })
-      } catch (e) {
-         res.status(500).json({ message: e.message })
+      } catch (err) {
+         res.status(500).json({ message: err.message })
       }
    },
 
@@ -74,21 +75,21 @@ const categoryController = {
          res.status(200).json({
             message: 'Delete this category successfully'
          })
-      } catch (e) {
+      } catch (err) {
          res.status(500).json({ message: e.message })
       }
    },
 
    postProduct: async (req, res) => {
       try {
-         const category = await Category.findById({ _id: req.params.id })
+         const category = await Category.findById(req.params.id)
          if (!category)
             return res.status(404).json('Category is not exist')
 
          category.products.push({
-            'name': req.body.name,
-            'price': req.body.price,
-            'imgURL': req.body.imgURL
+            name: req.body.name,
+            price: req.body.price,
+            imgURL: req.body.imgURL
          })
 
          category.save()
@@ -97,14 +98,14 @@ const categoryController = {
             message: `Add product: ${req.body.name} successfully`,
             data: category
          })
-      } catch (e) {
-         res.status(500).json({ message: e.message })
+      } catch (err) {
+         res.status(500).json({ message: err.message })
       }
    },
 
    putProduct: async (req, res) => {
       try {
-         const category = await Category.findById({ _id: req.params.id })
+         const category = await Category.findById(req.params.id)
          if (!category)
             return res.status(404).json('Category is not exist')
 
@@ -122,8 +123,8 @@ const categoryController = {
             message: `Put product: ${req.body.name}`,
             data: category
          })
-      } catch (e) {
-         res.status(500).json({ message: e.message })
+      } catch (err) {
+         res.status(500).json({ message: err.message })
       }
    },
 
@@ -131,18 +132,15 @@ const categoryController = {
       try {
          const newCategory = await Category.updateOne(
             { _id: req.params.id },
-            {
-               $pull:
-                  { products: { productId: req.params.productId } }
-            }
+            { $pull: { products: { productId: req.params.productId } } }
          )
 
          res.status(200).json({
             message: 'Delete that product successfully',
             data: newCategory
          })
-      } catch (e) {
-         res.status(500).json({ message: e.message })
+      } catch (err) {
+         res.status(500).json({ message: err.message })
       }
    }
 }

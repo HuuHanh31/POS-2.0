@@ -6,18 +6,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    name: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: Number,
-        required: true
-    },
-    imgURL: {
-        type: String,
-        required: true
-    }
+    price: Number
 })
 
 const orderSchema = new mongoose.Schema({
@@ -39,10 +28,7 @@ const orderSchema = new mongoose.Schema({
     },
     payment: String,
     products: [productSchema],
-    total: {
-        type: Number,
-        required: true
-    }
+    total: Number
 }, { timestamps: true })
 
 const Order = mongoose.model('Order', orderSchema)
